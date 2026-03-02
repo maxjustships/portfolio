@@ -26,6 +26,7 @@ To stop the server:
 
 # Development Conventions
 - **Data-Driven UI:** Project data (titles, descriptions, links, image paths, tags) should be strictly maintained in `data.js`. The `index.html` file automatically iterates over this data to render the project grid.
-- **Tag Management:** Keep the project tags concise and standardized. Before adding a new tag, check `data.js` and reuse an existing one if it fits.
+- **Tag Management:** Keep the project tags concise and standardized. Before adding a new tag, check `data.js` and reuse an existing one if it fits. 
+    - **Categories:** Use the `category:value` format (e.g., `platform:Web`) to group tags in the filter UI. Tags without a colon will be listed in a general group at the bottom.
 - **Styling:** Adhere to the existing Tailwind utility classes and the custom "neo-brutalism" CSS defined in the `<style>` block of `index.html` (e.g., `neo-brutalism-card`, `neo-brutalism-button-orange`).
 - **Assets:** Images and visual assets are stored in the `assets/` directory. Ensure new assets are optimized (e.g., WebP format) to maintain performance.

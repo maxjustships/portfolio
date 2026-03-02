@@ -120,13 +120,13 @@
 
         <!-- Projects Grid -->
         <section>
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+            <div class="flex flex-col mb-12 gap-8">
                 <h2 class="text-3xl font-black uppercase inline-block bg-white text-black px-4 py-1 -rotate-1 self-start">
                     Selected Works
                 </h2>
                 
-                <div id="tags-filter" class="flex flex-wrap gap-3 max-w-xl justify-start md:justify-end">
-                    <!-- Dynamic tags will be injected here -->
+                <div id="tags-filter" class="flex flex-col gap-4 items-center md:items-end">
+                    <!-- Dynamic categories and tags will be injected here -->
                 </div>
             </div>
             
@@ -161,18 +161,73 @@
         
         let activeTag = 'ALL';
 
-        // Extract unique tags
-        const allTags = ['ALL', ...new Set(PROJECTS.flatMap(p => p.tags).sort())];
+        // Extract and group tags
+        const rawTags = [...new Set(PROJECTS.flatMap(p => p.tags))];
+        const categorizedTags = {};
+        const uncategorizedTags = [];
+
+        rawTags.forEach(tag => {
+            if (tag.includes(':')) {
+                const [category, value] = tag.split(':');
+                if (!categorizedTags[category]) categorizedTags[category] = [];
+                categorizedTags[category].push({ full: tag, display: value });
+            } else {
+                uncategorizedTags.push({ full: tag, display: tag });
+            }
+        });
+
+        // Sort tags
+        Object.keys(categorizedTags).forEach(cat => categorizedTags[cat].sort((a, b) => a.display.localeCompare(b.display)));
+        uncategorizedTags.sort((a, b) => a.display.localeCompare(b.display));
 
         function renderTags() {
-            tagsFilter.innerHTML = allTags.map(tag => `
-                <button 
-                    class="tag-pill text-xs font-black uppercase border-2 border-white px-3 py-1 bg-black ${activeTag === tag ? 'active' : ''}"
-                    onclick="window.filterByTag('${tag}')"
-                >
-                    ${tag}
-                </button>
-            `).join('');
+            let html = `
+                <div class="flex flex-wrap gap-2 justify-center md:justify-end">
+                    <button 
+                        class="tag-pill text-xs font-black uppercase border-2 border-white px-3 py-1 bg-black ${activeTag === 'ALL' ? 'active' : ''}"
+                        onclick="window.filterByTag('ALL')"
+                    >
+                        ALL
+                    </button>
+                </div>
+            `;
+
+            // Render categorized groups
+            Object.keys(categorizedTags).sort().forEach(category => {
+                html += `
+                    <div class="flex flex-col items-center md:items-end gap-2">
+                        <span class="text-[10px] uppercase opacity-50 font-black tracking-widest">${category}</span>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-end">
+                            ${categorizedTags[category].map(tag => `
+                                <button 
+                                    class="tag-pill text-xs font-black uppercase border-2 border-white px-3 py-1 bg-black ${activeTag === tag.full ? 'active' : ''}"
+                                    onclick="window.filterByTag('${tag.full}')"
+                                >
+                                    ${tag.display}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render uncategorized group
+            if (uncategorizedTags.length > 0) {
+                html += `
+                    <div class="flex flex-wrap gap-2 justify-center md:justify-end mt-2">
+                        ${uncategorizedTags.map(tag => `
+                            <button 
+                                class="tag-pill text-xs font-black uppercase border-2 border-white px-3 py-1 bg-black ${activeTag === tag.full ? 'active' : ''}"
+                                onclick="window.filterByTag('${tag.full}')"
+                            >
+                                ${tag.display}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            tagsFilter.innerHTML = html;
         }
 
         function renderProjects() {
@@ -194,11 +249,14 @@
                         <div class="p-8 md:w-2/3 flex flex-col justify-between">
                             <div>
                                 <div class="flex flex-wrap gap-2 mb-4">
-                                    ${project.tags.map(tag => `
-                                        <span class="text-xs font-black uppercase border-2 border-white px-2 py-0.5 bg-black">
-                                            ${tag}
-                                        </span>
-                                    `).join('')}
+                                    ${project.tags.map(tag => {
+                                        const display = tag.includes(':') ? tag.split(':')[1] : tag;
+                                        return `
+                                            <span class="text-xs font-black uppercase border-2 border-white px-2 py-0.5 bg-black">
+                                                ${display}
+                                            </span>
+                                        `;
+                                    }).join('')}
                                 </div>
                                 <h3 class="text-3xl md:text-4xl font-black uppercase mb-4 tracking-tight italic">${project.title}</h3>
                                 <div class="project-description text-lg opacity-80 leading-relaxed mb-8">
