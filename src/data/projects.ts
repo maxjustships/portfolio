@@ -21,6 +21,18 @@ export interface SmallTool {
 
 export const PROJECTS: Project[] = [
   {
+    title: 'nomnomcli',
+    problem: 'AI agents guess calories instead of calculating them — nutrition answers are plausible-sounding hallucinations.',
+    solution:
+      'An agent-first CLI where deterministic code does the math against a bundled USDA food database — the agent is only the voice interface. Russian/English food parsing, recipe import from URLs, local SQLite, zero runtime dependencies.',
+    stack: ['Python', 'SQLite', 'USDA FDC', 'Agent skills'],
+    live: 'https://github.com/maxjustships/nomnomcli',
+    liveLabel: 'View project',
+    source: 'https://github.com/maxjustships/nomnomcli',
+    monogram: 'NN',
+    color: 'orange',
+  },
+  {
     title: 'YourLandingSucks',
     problem: 'Landing pages lose conversions to issues nobody checks after launch.',
     solution:
