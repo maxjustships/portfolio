@@ -45,18 +45,6 @@ export const PROJECTS: Project[] = [
     color: 'blue',
   },
   {
-    title: 'KBFlow',
-    problem: 'People stay slow at their computers because keyboard fluency never gets trained.',
-    solution:
-      'Interactive lessons and challenges for building a calmer, keyboard-driven workflow — with accessibility-first design.',
-    stack: ['Astro', 'TypeScript', 'Accessibility'],
-    live: 'https://kbflow-dev.pages.dev/',
-    liveLabel: 'View live',
-    source: 'https://github.com/maxjustships/kbflow',
-    image: '/assets/kbflow.webp',
-    color: 'orange',
-  },
-  {
     title: 'Noise & Beats',
     problem: 'Focus apps are bloated; a browser tab should be enough.',
     solution:
@@ -74,8 +62,8 @@ export const PROJECTS: Project[] = [
     solution:
       'A local-first browser tool to combine, reorder, and deduplicate exports — drag-and-drop JSON, nothing leaves the machine.',
     stack: ['React', 'Vite', 'Local-first'],
-    live: 'https://github.com/maxjustships/ai-studio-parser',
-    liveLabel: 'View project',
+    live: 'https://aistudio-parser.pages.dev/',
+    liveLabel: 'View live',
     source: 'https://github.com/maxjustships/ai-studio-parser',
     image: '/assets/aistudioparser.webp',
     color: 'orange',
@@ -95,6 +83,11 @@ export const PROJECTS: Project[] = [
 ];
 
 export const SMALL_TOOLS: SmallTool[] = [
+  {
+    title: 'KBFlow',
+    line: 'A small page about keyboard-driven workflow love — lessons and challenges for a calmer computer life.',
+    url: 'https://kbflow-dev.pages.dev/',
+  },
   {
     title: 'Tintpad',
     line: 'A tiny installable lightpad — fills the screen with color and simple animations.',
