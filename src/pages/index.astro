@@ -27,8 +27,16 @@ import { PROJECTS, SMALL_TOOLS, CONTACT } from '../data/projects';
         </p>
         <div class="mt-10 flex flex-wrap gap-4">
           <a
-            href="#projects"
+            href={CONTACT.telegram}
+            target="_blank"
+            rel="noopener"
             class="brutal-button bg-brand-orange px-6 py-3 text-sm font-bold uppercase tracking-wide text-black"
+          >
+            Let's talk →
+          </a>
+          <a
+            href="#projects"
+            class="brutal-button bg-black px-6 py-3 text-sm font-bold uppercase tracking-wide text-white hover:bg-white hover:text-black"
           >
             View projects ↓
           </a>
