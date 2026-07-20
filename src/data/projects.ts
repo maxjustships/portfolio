@@ -86,8 +86,8 @@ export const PROJECTS: Project[] = [
     solution:
       'A Chrome extension that saves images in your preferred format in one click, with a clean conversion pipeline.',
     stack: ['TypeScript', 'Chrome Extensions API'],
-    live: 'https://github.com/maxjustships/ez-img-save',
-    liveLabel: 'View project',
+    live: 'https://chromewebstore.google.com/detail/ez-img-save/digemoeenibfaakmlfdojimelmkgioad',
+    liveLabel: 'View in Chrome Web Store',
     source: 'https://github.com/maxjustships/ez-img-save',
     monogram: 'EZ',
     color: 'blue',
