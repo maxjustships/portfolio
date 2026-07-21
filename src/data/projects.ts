@@ -21,6 +21,18 @@ export interface SmallTool {
 
 export const PROJECTS: Project[] = [
   {
+    title: 'ohmycloudbill',
+    problem: 'Cloud billing data lags by hours — budget alerts fire after the damage, and free tiers just break when you hit the cap.',
+    solution:
+      'A silent watchdog CLI that polls provider usage APIs, projects month-end spend, and watches free-tier limits — it stays quiet until something is actually wrong. Cloudflare adapter live; Vercel, Netlify, and AWS next.',
+    stack: ['Python', 'Cloudflare GraphQL API', 'cron'],
+    live: 'https://github.com/maxjustships/ohmycloudbill',
+    liveLabel: 'View project',
+    source: 'https://github.com/maxjustships/ohmycloudbill',
+    monogram: 'OCB',
+    color: 'blue',
+  },
+  {
     title: 'nomnomcli',
     problem: 'AI agents guess calories instead of calculating them — nutrition answers are plausible-sounding hallucinations.',
     solution:
