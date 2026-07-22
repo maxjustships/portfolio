@@ -62,24 +62,24 @@ body {
   top: 0;
   right: 0;
   bottom: 3rem;
-  width: 40%;
-  background: #fff;
-  mask-image: url('/assets/photo.png');
-  -webkit-mask-image: url('/assets/photo.png');
-  mask-position: top right;
-  -webkit-mask-position: top right;
-  mask-size: contain;
-  -webkit-mask-size: contain;
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-  opacity: 0.35;
+  width: 55%;
+  background-image: url('/assets/photo-lines.png');
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: right 22% top 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+  opacity: 0.5;
   pointer-events: none;
 }
 
 @media (max-width: 768px) {
   .portrait-backdrop {
     width: 100%;
-    opacity: 0.1;
+    background-position: center top;
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    opacity: 0.15;
   }
 }
 
