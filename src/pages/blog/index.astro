@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+
+<Layout
+  title="Blog — Max builds and ships software products"
+  description="Notes and experiments from building and shipping software: agents, benchmarks, and the tooling behind maxjustships.dev."
+>
+  <div class="relative">
+    <header class="relative overflow-hidden">
+      <div class="relative mx-auto max-w-5xl px-6 pt-20 pb-12 md:pt-28 md:pb-16">
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-orange">
+          <a href="/" class="hover:text-white">maxjustships.dev</a> / blog
+        </p>
+        <h1 class="font-display mt-4 text-5xl md:text-6xl font-black leading-[1.05] tracking-tight">
+          Blog
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
+          Notes and experiments from building and shipping software — agents, benchmarks, and the tooling behind it.
+        </p>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-6">
+      <section class="border-t-2 border-white/15 py-14">
+        {posts.length === 0 ? (
+          <p class="text-white/60">No posts yet — check back soon.</p>
+        ) : (
+          <ul class="grid gap-8">
+            {posts.map((post) => (
+              <li>
+                <article class="brutal-card bg-black p-6 md:p-8">
+                  <p class="text-sm font-semibold uppercase tracking-wider text-white/50">
+                    <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+                  </p>
+                  <h2 class="font-display mt-2 text-2xl md:text-3xl font-black tracking-tight">
+                    <a href={`/blog/${post.id}/`} class="hover:text-brand-orange">
+                      {post.data.title}
+                    </a>
+                  </h2>
+                  <p class="mt-3 leading-relaxed text-white/80">{post.data.description}</p>
+                  <ul class="mt-4 flex flex-wrap gap-2">
+                    {post.data.tags.map((tag) => (
+                      <li class="border border-white/40 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-white/70">
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                  <div class="mt-6">
+                    <a
+                      href={`/blog/${post.id}/`}
+                      class="brutal-button inline-block bg-brand-orange px-5 py-2 text-xs font-bold uppercase tracking-wide text-black"
+                    >
+                      Read post →
+                    </a>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </main>
+
+    <footer class="border-t-2 border-white/15">
+      <div class="mx-auto max-w-5xl px-6 py-10">
+        <p class="text-xs uppercase tracking-widest text-white/40">
+          © 2026 Max · <a href="/" class="underline underline-offset-4 hover:text-white">maxjustships.dev</a> · Build. Ship. Repeat.
+        </p>
+      </div>
+    </footer>
+  </div>
+</Layout>
