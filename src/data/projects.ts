@@ -21,6 +21,19 @@ export interface SmallTool {
 
 export const PROJECTS: Project[] = [
   {
+    title: 'mcpgate',
+    problem:
+      'MCP servers dump their whole tool catalog into an agent’s context — and sandboxed agents can’t reach a warm MCP runtime at all: every socket is blocked, only files work.',
+    solution:
+      'A warm daemon + policy gate for MCP: persistent sessions (2–10 ms vs ~1.7 s cold), read-only allowlists, metadata-only audit, and a file bridge that works inside default agent sandboxes. Measured: −31% tokens vs naive MCP on clients without built-in tool search.',
+    stack: ['Python', 'MCP SDK', 'File-bridge IPC'],
+    live: 'https://github.com/maxjustships/mcpgate',
+    liveLabel: 'View project',
+    source: 'https://github.com/maxjustships/mcpgate',
+    monogram: 'MG',
+    color: 'orange',
+  },
+  {
     title: 'ohmycloudbill',
     problem: 'Cloud billing data lags by hours — budget alerts fire after the damage, and free tiers just break when you hit the cap.',
     solution:
