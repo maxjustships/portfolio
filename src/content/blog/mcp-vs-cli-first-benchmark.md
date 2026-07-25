@@ -84,4 +84,4 @@ mcpgate — warm daemon + policy gate. Dogfood verified: same scenario inside Co
 
 ## Methodology & caveats
 
-One model, one provider, synthetic fixtures, small rep counts — no cross-model significance. Token accounting differs per client (Hermes input/output counters vs Codex total); I only compare within-client. All fixtures read-only; traces metadata-only. Lab repo with all traces and the full decision doc: [link pending public release].
+One model, one provider, synthetic fixtures, small rep counts — no cross-model significance. Token accounting differs per client (Hermes input/output counters vs Codex total); I only compare within-client. All fixtures read-only; traces metadata-only. The lab repo with all traces and the full decision doc is [mcp2cli-lab](https://github.com/maxjustships/mcp2cli-lab), and the warm daemon + policy gate is [mcpgate](https://github.com/maxjustships/mcpgate).
