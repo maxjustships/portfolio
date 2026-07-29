@@ -275,3 +275,17 @@ body {
   line-height: 1.4;
   color: #fff;
 }
+
+/* Give editorial diagrams the full mobile viewport so their labels stay readable. */
+@media (max-width: 480px) {
+  .blog-hero,
+  .prose figure {
+    width: calc(100% + 3rem);
+    margin-left: -1.5rem;
+  }
+
+  .blog-hero figcaption,
+  .prose figcaption {
+    padding-inline: 1.5rem;
+  }
+}

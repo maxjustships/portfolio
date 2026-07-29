@@ -55,7 +55,7 @@
   <rect x="40" y="716" width="480" height="76" fill="#000000" stroke="#f97316" stroke-width="3"/>
   <circle cx="76" cy="754" r="20" fill="#f97316"/>
   <text x="76" y="762" text-anchor="middle" font-size="24" font-weight="900" fill="#000000">7</text>
-  <text x="112" y="750" font-size="24" font-weight="700" fill="#ffffff">Rerun — the world is now</text>
+  <text x="112" y="750" font-size="24" font-weight="700" fill="#ffffff">Rerun: the world is now</text>
   <text x="112" y="778" font-size="24" font-weight="700" fill="#ffffff">a regression test</text>
 
   <!-- loop-back arrow from 7 to 1 -->

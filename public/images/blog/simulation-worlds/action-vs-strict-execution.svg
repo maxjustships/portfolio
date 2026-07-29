@@ -3,7 +3,7 @@
   <desc id="chart-desc">Bar chart of the same 140 attempted runs measured two ways. A surface check, correct high-level action, passes 87 percent (121 of 139 valid runs). The full strict execution contract passes 47 percent (66 of 140 attempted runs). The gap is 39.9 percentage points.</desc>
   <rect width="720" height="470" fill="#000000"/>
 
-  <text x="30" y="44" font-size="21" font-weight="700" letter-spacing="2" fill="#ffffff" opacity="0.6">SAME RUNS, TWO DIFFERENT RULERS</text>
+  <text x="30" y="44" font-size="21" font-weight="700" letter-spacing="2" fill="#ffffff" opacity="0.6">SAME BATCH, TWO DIFFERENT RULERS</text>
 
   <!-- bar 1: surface action -->
   <text x="30" y="104" font-size="26" font-weight="700" fill="#ffffff">Correct high-level action</text>
@@ -22,5 +22,5 @@
   <!-- gap note -->
   <line x1="340" y1="302" x2="604" y2="144" stroke="#ffffff" stroke-width="2" opacity="0.4" stroke-dasharray="6 6"/>
   <text x="30" y="412" font-size="24" font-weight="700" fill="#ffffff">Gap: 39.9 percentage points</text>
-  <text x="30" y="444" font-size="20" fill="#ffffff" opacity="0.6">Every point is a run with at least one material contract failure.</text>
+  <text x="30" y="444" font-size="18" fill="#ffffff" opacity="0.6">Strict includes evidence, timing, role, channel, pair behavior, safety, and schema.</text>
 </svg>

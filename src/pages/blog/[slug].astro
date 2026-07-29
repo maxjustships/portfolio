@@ -20,7 +20,7 @@ const formatDate = (date: Date) =>
 <Layout title={`${post.data.title} — maxjustships.dev`} description={post.data.description} ogType="article">
   <div class="relative">
     <header class="relative">
-      <div class="mx-auto max-w-3xl px-6 pt-16 pb-10 md:pt-24">
+      <div class:list={["mx-auto max-w-3xl px-6 pt-16 md:pt-24", post.data.hero ? "pb-6" : "pb-10"]}>
         <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-orange">
           <a href="/" class="hover:text-white">maxjustships.dev</a> / <a href="/blog/" class="hover:text-white">blog</a>
         </p>
@@ -47,7 +47,7 @@ const formatDate = (date: Date) =>
 
     <main class="mx-auto max-w-3xl px-6 pb-16">
       {post.data.hero && (
-        <figure class="mt-10 border-t-2 border-white/15 pt-10">
+        <figure class="mt-4 border-t-2 border-white/15 pt-6 blog-hero">
           <img
             src={post.data.hero.src}
             alt={post.data.hero.alt}
