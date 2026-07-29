@@ -27,6 +27,11 @@ const formatDate = (date: Date) =>
         <h1 class="font-display mt-6 text-4xl md:text-5xl font-black leading-[1.1] tracking-tight">
           {post.data.title}
         </h1>
+        {post.data.dek && (
+          <p class="mt-4 max-w-2xl text-lg leading-relaxed text-white/75">
+            {post.data.dek}
+          </p>
+        )}
         <p class="mt-4 text-sm font-semibold uppercase tracking-wider text-white/50">
           <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
         </p>
@@ -41,7 +46,21 @@ const formatDate = (date: Date) =>
     </header>
 
     <main class="mx-auto max-w-3xl px-6 pb-16">
-      <article class="prose border-t-2 border-white/15 pt-10">
+      {post.data.hero && (
+        <figure class="mt-10 border-t-2 border-white/15 pt-10">
+          <img
+            src={post.data.hero.src}
+            alt={post.data.hero.alt}
+            class="w-full border-2 border-white/25"
+            loading="eager"
+            decoding="async"
+          />
+          {post.data.hero.caption && (
+            <figcaption class="mt-3 text-sm text-white/55">{post.data.hero.caption}</figcaption>
+          )}
+        </figure>
+      )}
+      <article class:list={["prose pt-10", !post.data.hero && "border-t-2 border-white/15"]}>
         <Content />
       </article>
       <div class="mt-14 border-t-2 border-white/15 pt-8">
