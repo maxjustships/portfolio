@@ -233,3 +233,170 @@ body {
 .prose tbody tr:last-child td {
   border-bottom: none;
 }
+
+/* Reusable editorial blocks for rich articles */
+.prose aside.tldr {
+  border: 3px solid #fff;
+  box-shadow: 6px 6px 0 0 var(--color-brand-orange);
+  padding: 1.25rem 1.5rem;
+  color: rgb(255 255 255 / 0.9);
+}
+.prose aside.tldr > * + * {
+  margin-top: 0.75rem;
+}
+.prose aside.tldr .tldr-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-brand-orange);
+  margin-bottom: 0.75rem;
+}
+/* Compact provenance box for research articles */
+.prose aside.methods-box {
+  border: 3px solid #fff;
+  box-shadow: 6px 6px 0 0 var(--color-brand-blue);
+  padding: 1.25rem 1.5rem;
+  color: rgb(255 255 255 / 0.9);
+}
+.prose aside.methods-box > * + * {
+  margin-top: 0.75rem;
+}
+.prose aside.methods-box .methods-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-brand-blue);
+  margin-bottom: 0.75rem;
+}
+.prose aside.methods-box dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.875rem 1.75rem;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+@media (min-width: 640px) {
+  .prose aside.methods-box dl {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.prose aside.methods-box dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #fff;
+  margin-bottom: 0.15rem;
+}
+.prose aside.methods-box dd {
+  margin: 0;
+  color: rgb(255 255 255 / 0.7);
+}
+.prose aside.methods-box dl > div:last-child {
+  grid-column: 1 / -1;
+}
+.prose .proof-thesis {
+  max-width: 38rem;
+  margin: 1.25rem 0 1.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+}
+.prose ol.proof-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: proof-step;
+}
+.prose ol.proof-steps li {
+  position: relative;
+  margin: 0;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  padding: 1.1rem 1.15rem 1.2rem;
+  background: #080808;
+  color: rgb(255 255 255 / 0.72);
+  counter-increment: proof-step;
+}
+.prose ol.proof-steps li::before {
+  content: "0" counter(proof-step);
+  display: block;
+  margin-bottom: 0.55rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-brand-orange);
+}
+.prose ol.proof-steps strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: #fff;
+}
+@media (min-width: 640px) {
+  .prose ol.proof-steps {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .prose ol.proof-steps li:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 1rem;
+    right: -0.7rem;
+    z-index: 1;
+    padding: 0 0.2rem;
+    background: #000;
+    font-size: 1.15rem;
+    color: var(--color-brand-orange);
+  }
+}
+.prose figure {
+  margin-top: 2.5rem;
+}
+.prose figure img {
+  width: 100%;
+  height: auto;
+  border: 2px solid rgb(255 255 255 / 0.25);
+  background-color: #0a0a0a;
+}
+.prose figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: rgb(255 255 255 / 0.55);
+}
+.prose .callout {
+  border-left: 3px solid var(--color-brand-blue);
+  padding-left: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: #fff;
+}
+.prose .callout.proof-callout {
+  border-left-color: var(--color-brand-orange);
+}
+
+/* Give editorial diagrams the full mobile viewport so their labels stay readable. */
+@media (max-width: 480px) {
+  .blog-hero,
+  .prose figure {
+    width: calc(100% + 3rem);
+    margin-left: -1.5rem;
+  }
+
+  .blog-hero figcaption,
+  .prose figcaption {
+    padding-inline: 1.5rem;
+  }
+}

@@ -9,6 +9,14 @@ const blog = defineCollection({
     pubDate: z.date(),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
+    dek: z.string().optional(),
+    hero: z
+      .object({
+        src: z.string(),
+        alt: z.string(),
+        caption: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 

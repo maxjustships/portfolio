@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="hero-title hero-desc" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+  <title id="hero-title">Two paired test worlds with one changed fact</title>
+  <desc id="hero-desc">The same agent and the same task are fed into two almost identical worlds. The only difference is the age of the trigger: two days old in world A, forty-five days old in world B. The question is whether the agent's decision tracks that single changed fact.</desc>
+  <rect width="720" height="560" fill="#000000"/>
+
+  <!-- agent box -->
+  <rect x="183" y="28" width="354" height="52" fill="#000000" stroke="#ffffff" stroke-width="3"/>
+  <text x="360" y="61" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="2" fill="#ffffff">SAME AGENT · SAME TASK</text>
+
+  <!-- arrows from agent to worlds -->
+  <line x1="300" y1="80" x2="200" y2="112" stroke="#ffffff" stroke-width="3"/>
+  <polygon points="200,112 214,108 206,122" fill="#ffffff" transform="translate(-6,-4)"/>
+  <line x1="420" y1="80" x2="520" y2="112" stroke="#ffffff" stroke-width="3"/>
+  <polygon points="520,112 506,108 514,122" fill="#ffffff" transform="translate(6,-4)"/>
+
+  <!-- world A -->
+  <rect x="36" y="124" width="304" height="312" fill="#000000" stroke="#ffffff" stroke-width="3"/>
+  <text x="58" y="164" font-size="26" font-weight="900" letter-spacing="1" fill="#ffffff">WORLD A</text>
+  <line x1="58" y1="178" x2="318" y2="178" stroke="#ffffff" stroke-width="2" opacity="0.35"/>
+
+  <rect x="52" y="192" width="272" height="46" fill="#f97316"/>
+  <text x="66" y="222" font-size="22" font-weight="700" fill="#000000">Trigger · 2 days old</text>
+
+  <text x="66" y="282" font-size="22" fill="#ffffff" opacity="0.9">Buyer · VP Sales</text>
+  <text x="66" y="338" font-size="22" fill="#ffffff" opacity="0.9">Evidence · verified</text>
+  <text x="66" y="394" font-size="22" fill="#ffffff" opacity="0.9">Channel · safe</text>
+
+  <!-- world B -->
+  <rect x="380" y="124" width="304" height="312" fill="#000000" stroke="#ffffff" stroke-width="3"/>
+  <text x="402" y="164" font-size="26" font-weight="900" letter-spacing="1" fill="#ffffff">WORLD B</text>
+  <line x1="402" y1="178" x2="662" y2="178" stroke="#ffffff" stroke-width="2" opacity="0.35"/>
+
+  <rect x="396" y="192" width="272" height="46" fill="#f97316"/>
+  <text x="410" y="222" font-size="22" font-weight="700" fill="#000000">Trigger · 45 days old</text>
+
+  <text x="410" y="282" font-size="22" fill="#ffffff" opacity="0.9">Buyer · VP Sales</text>
+  <text x="410" y="338" font-size="22" fill="#ffffff" opacity="0.9">Evidence · verified</text>
+  <text x="410" y="394" font-size="22" fill="#ffffff" opacity="0.9">Channel · safe</text>
+
+  <!-- changed fact annotation -->
+  <line x1="188" y1="436" x2="300" y2="468" stroke="#f97316" stroke-width="3"/>
+  <line x1="532" y1="436" x2="420" y2="468" stroke="#f97316" stroke-width="3"/>
+  <text x="360" y="492" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="2" fill="#f97316">ONE CHANGED FACT</text>
+
+  <!-- question strip -->
+  <text x="360" y="538" text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">Did the decision track it?</text>
+</svg>

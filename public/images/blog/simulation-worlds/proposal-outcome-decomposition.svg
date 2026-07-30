@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 575" role="img" aria-labelledby="decomp-title decomp-desc" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+  <title id="decomp-title">Where 140 attempts landed</title>
+  <desc id="decomp-desc">A stacked bar and four legend rows decompose all 140 attempted benchmark runs on one denominator. 66 valid outputs passed the action check and every scored proposal-contract check. 55 chose an acceptable action but failed at least one other scored condition. 18 failed the action check. 1 output was schema-invalid. Grading the action alone would have called the 55 fine.</desc>
+  <rect width="560" height="575" fill="#000000"/>
+
+  <text x="40" y="48" font-size="22" font-weight="700" letter-spacing="2" fill="#ffffff" opacity="0.6">WHERE 140 ATTEMPTS LANDED</text>
+
+  <!-- stacked bar: all 140 attempts, one denominator -->
+  <rect x="40" y="84" width="226.3" height="60" fill="#0ea5e9"/>
+  <rect x="266.3" y="84" width="188.6" height="60" fill="#f97316"/>
+  <rect x="454.9" y="84" width="61.7" height="60" fill="#000000" stroke="#ffffff" stroke-width="2"/>
+  <rect x="516.6" y="84" width="3.4" height="60" fill="#ffffff" opacity="0.45"/>
+  <text x="153" y="123" text-anchor="middle" font-size="26" font-weight="900" fill="#000000">66</text>
+  <text x="361" y="123" text-anchor="middle" font-size="26" font-weight="900" fill="#000000">55</text>
+  <text x="486" y="121" text-anchor="middle" font-size="20" font-weight="900" fill="#ffffff">18</text>
+  <line x1="518" y1="82" x2="518" y2="66" stroke="#ffffff" stroke-width="2"/>
+  <text x="510" y="64" text-anchor="end" font-size="18" font-weight="800" fill="#ffffff">1 INVALID</text>
+
+  <!-- row 1: full pass -->
+  <rect x="40" y="184" width="20" height="20" fill="#0ea5e9"/>
+  <text x="78" y="210" font-size="36" font-weight="900" fill="#ffffff">66</text>
+  <text x="150" y="200" font-size="20" font-weight="700" fill="#ffffff">Acceptable action, every scored</text>
+  <text x="150" y="226" font-size="20" fill="#ffffff">proposal-contract check passed</text>
+  <text x="150" y="252" font-size="18" fill="#ffffff" opacity="0.55">47.1% of all 140 attempts</text>
+
+  <!-- row 2: the finding -->
+  <rect x="28" y="276" width="504" height="126" fill="none" stroke="#f97316" stroke-width="3"/>
+  <rect x="44" y="294" width="20" height="20" fill="#f97316"/>
+  <text x="82" y="320" font-size="36" font-weight="900" fill="#ffffff">55</text>
+  <text x="154" y="310" font-size="20" font-weight="700" fill="#ffffff">Acceptable action, at least one</text>
+  <text x="154" y="336" font-size="20" fill="#ffffff">other scored check failed</text>
+  <text x="154" y="362" font-size="18" font-weight="700" fill="#f97316">39.3% of attempts, invisible if you</text>
+  <text x="154" y="384" font-size="18" font-weight="700" fill="#f97316">grade the action alone</text>
+
+  <!-- row 3: action failed -->
+  <rect x="40" y="428" width="20" height="20" fill="#000000" stroke="#ffffff" stroke-width="2"/>
+  <text x="78" y="454" font-size="36" font-weight="900" fill="#ffffff">18</text>
+  <text x="150" y="444" font-size="20" font-weight="700" fill="#ffffff">Action check failed</text>
+  <text x="150" y="470" font-size="18" fill="#ffffff" opacity="0.55">12.9% of attempts</text>
+
+  <!-- row 4: schema invalid -->
+  <rect x="40" y="504" width="20" height="20" fill="#ffffff" opacity="0.45"/>
+  <text x="78" y="530" font-size="36" font-weight="900" fill="#ffffff">1</text>
+  <text x="150" y="520" font-size="20" font-weight="700" fill="#ffffff">Schema-invalid output</text>
+  <text x="150" y="546" font-size="18" fill="#ffffff" opacity="0.55">0.7% of attempts</text>
+
+</svg>
