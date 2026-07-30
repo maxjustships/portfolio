@@ -253,6 +253,50 @@ body {
   color: var(--color-brand-orange);
   margin-bottom: 0.75rem;
 }
+/* Compact provenance box for research articles */
+.prose aside.methods-box {
+  border: 3px solid #fff;
+  box-shadow: 6px 6px 0 0 var(--color-brand-blue);
+  padding: 1.25rem 1.5rem;
+  color: rgb(255 255 255 / 0.9);
+}
+.prose aside.methods-box > * + * {
+  margin-top: 0.75rem;
+}
+.prose aside.methods-box .methods-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-brand-blue);
+  margin-bottom: 0.75rem;
+}
+.prose aside.methods-box dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.875rem 1.75rem;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+@media (min-width: 640px) {
+  .prose aside.methods-box dl {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.prose aside.methods-box dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #fff;
+  margin-bottom: 0.15rem;
+}
+.prose aside.methods-box dd {
+  margin: 0;
+  color: rgb(255 255 255 / 0.7);
+}
 .prose figure {
   margin-top: 2.5rem;
 }
