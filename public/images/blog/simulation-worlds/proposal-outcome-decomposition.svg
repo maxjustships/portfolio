@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 690" role="img" aria-labelledby="decomp-title decomp-desc" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 575" role="img" aria-labelledby="decomp-title decomp-desc" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
   <title id="decomp-title">Where 140 attempts landed</title>
   <desc id="decomp-desc">A stacked bar and four legend rows decompose all 140 attempted benchmark runs on one denominator. 66 valid outputs passed the action check and every scored proposal-contract check. 55 chose an acceptable action but failed at least one other scored condition. 18 failed the action check. 1 output was schema-invalid. Grading the action alone would have called the 55 fine.</desc>
-  <rect width="560" height="690" fill="#000000"/>
+  <rect width="560" height="575" fill="#000000"/>
 
   <text x="40" y="48" font-size="22" font-weight="700" letter-spacing="2" fill="#ffffff" opacity="0.6">WHERE 140 ATTEMPTS LANDED</text>
 
@@ -13,6 +13,8 @@
   <text x="153" y="123" text-anchor="middle" font-size="26" font-weight="900" fill="#000000">66</text>
   <text x="361" y="123" text-anchor="middle" font-size="26" font-weight="900" fill="#000000">55</text>
   <text x="486" y="121" text-anchor="middle" font-size="20" font-weight="900" fill="#ffffff">18</text>
+  <line x1="518" y1="82" x2="518" y2="66" stroke="#ffffff" stroke-width="2"/>
+  <text x="510" y="64" text-anchor="end" font-size="18" font-weight="800" fill="#ffffff">1 INVALID</text>
 
   <!-- row 1: full pass -->
   <rect x="40" y="184" width="20" height="20" fill="#0ea5e9"/>
@@ -42,9 +44,4 @@
   <text x="150" y="520" font-size="20" font-weight="700" fill="#ffffff">Schema-invalid output</text>
   <text x="150" y="546" font-size="18" fill="#ffffff" opacity="0.55">0.7% of attempts</text>
 
-  <!-- takeaway -->
-  <line x1="40" y1="586" x2="520" y2="586" stroke="#ffffff" stroke-width="2" opacity="0.25"/>
-  <text x="40" y="628" font-size="21" font-weight="700" fill="#ffffff">Grade only the action and 121 of 139 valid</text>
-  <text x="40" y="658" font-size="21" font-weight="700" fill="#ffffff">outputs look fine.</text>
-  <text x="246" y="658" font-size="21" font-weight="700" fill="#f97316">55 of them were not.</text>
 </svg>

@@ -297,6 +297,9 @@ body {
   margin: 0;
   color: rgb(255 255 255 / 0.7);
 }
+.prose aside.methods-box dl > div:last-child {
+  grid-column: 1 / -1;
+}
 .prose figure {
   margin-top: 2.5rem;
 }
@@ -318,6 +321,9 @@ body {
   font-size: 1.25rem;
   line-height: 1.4;
   color: #fff;
+}
+.prose .callout.proof-callout {
+  border-left-color: var(--color-brand-orange);
 }
 
 /* Give editorial diagrams the full mobile viewport so their labels stay readable. */

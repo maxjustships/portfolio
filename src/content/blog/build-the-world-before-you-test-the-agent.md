@@ -1,6 +1,6 @@
 ---
 title: "Build the world before you test the agent"
-description: "How simulated worlds turn plausible agent behavior into reproducible bugs, and what an honest scorecard found in the first full lab: 55 failures that action-only grading missed."
+description: "How simulated worlds turn plausible agent behavior into reproducible bugs, and what one structured-decision lab found: 55 failures that action-only grading missed."
 pubDate: 2026-07-30
 tags: [ai, agents, testing]
 dek: "A practical way to turn plausible agent behavior into reproducible bugs, safer flows, and better CLI tools."
@@ -34,7 +34,7 @@ The useful move is not generating a pile of scenarios. It is building **paired w
 
 A clean pair gives you a **designed contrast**. If the decision should track the changed fact and doesn't, you have found insensitivity. If it flips when nothing material changed, you have found jumpiness. That turns vague unease into a named bug.
 
-Two honest limits, learned by auditing my own suite. Even a perfect contrast shows behavioral sensitivity, not an internal mechanism. And most of my pairs are not perfect: only one of fourteen has a complete structural test proving the visible projections differ only in the intended fact, and because world IDs and scenario tags are model-visible, only three pairs even share identical tags. The rest are designed contrasts, not controlled experiments.
+Two honest limits, learned by auditing my own suite. Even a perfect contrast shows behavioral sensitivity, not an internal mechanism. And most of my pairs are not perfect: only one of fourteen has a complete structural test proving the visible projections differ only in the intended fact. World and case IDs also differ by design, and only three pairs share identical visible scenario tags. The rest are designed contrasts, not controlled experiments.
 
 Pair results deserve the right counting unit too. Counting each pair under one repeat index as a single unit, rather than copying one verdict onto both peers, 63 of 70 units passed the pair-consistency check and 7 failed, one because a peer output was schema-invalid and unavailable for comparison. The audit gap is itself useful: the lab also tests whether the world design is strong enough. Right now: one pair proven, thirteen to go.
 
@@ -44,7 +44,7 @@ Language models vary from run to run, so one run says almost nothing. My core se
 
 A word about seeds. Where a provider supports them, matched seeds across paired peers are good noise control. My reported runs used none: no provider seed was passed or recorded, the repeat index served only to group peers, and invocation order was not randomized. Those controls belong to the next run, not this one.
 
-What five repeats do buy is a per-world stability read: the action was stable across repeats in 21 of 28 worlds, the complete scored outcome in only 10. Seven worlds passed every scored check 0 of 5 times; three passed 5 of 5. The pooled average hides that spread. These 28 worlds are a fixed, purposively authored corpus, not a random sample, so I will not dress the scores up with confidence intervals. They describe this corpus. Full stop.
+What five repeats do buy is a per-world stability read: the action was stable across repeats in 21 of 28 worlds, the complete scored outcome in only 10. Seven worlds passed every scored check 0 of 5 times; three passed 5 of 5. The pooled average hides that spread. These 28 worlds are a fixed, purposively authored corpus, not a random sample. I report the numbers as descriptive corpus results, not population estimates.
 
 ## The score lives outside the agent
 
@@ -54,18 +54,18 @@ In this benchmark the evidence was the proposal itself. The checker, a determini
 
 An executable world keeps a fuller trace: tool calls, evidence IDs touched, timing, state diffs, rejection reasons. This benchmark kept no such trace. The retained report stores parsed decisions, failure codes, and runtime metadata, not raw model outputs or rendered prompts. The cost is real: once a checker defect is found, old runs cannot be independently rescored.
 
-The checker has limits too. Supporting evidence nested inside account-fit factors is collected after the top-level overlap check runs, so some cross-field contradictions can slip through. Free-text fidelity and any real side effect sit outside the score entirely. A full pass means exactly "every implemented scored check passed." Nothing grander.
+The checker has limits too. Supporting evidence nested inside account-fit factors is collected after the top-level overlap check runs, so some cross-field contradictions can slip through. Free-text fidelity and any real side effect sit outside the score entirely. A full pass means exactly "every implemented scored check passed." It does not certify semantic fidelity or execution correctness.
 
 ## What the worlds caught
 
-Here is the proof block, from a decision agent I built for B2B outreach. It proposes a next action (proceed to human review, wait, reject, or research more) under a strict business contract, and nothing sends without exact human approval. The product doesn't matter here; the numbers do. The core corpus is 28 authored worlds repeated five times: 140 attempts, 139 schema-valid proposals, one invalid.
+Here is the proof block, from a decision agent I built for B2B outreach. It proposes a next action (proceed to human review, wait, reject, or research more) under a strict business contract, and nothing sends without exact human approval. The case is narrow, but it gives the method concrete evidence. The core corpus is 28 authored worlds repeated five times: 140 attempts, 139 schema-valid proposals, one invalid.
 
 <figure>
 <img src="/images/blog/simulation-worlds/proposal-outcome-decomposition.svg" alt="Chart decomposing all 140 attempted runs on one denominator: 66 valid outputs passed the action check and every scored proposal-contract check, 55 chose an acceptable action but failed at least one other scored condition, 18 failed the action check, and 1 output was schema-invalid. Grading the action alone would have called the 55 fine." loading="lazy" />
 <figcaption>All 140 attempts on one denominator. The orange 55 are the finding: acceptable action, failed contract. Fixed authored corpus, scored proposal-contract checks; not production reliability.</figcaption>
 </figure>
 
-<p class="callout">Grade the action alone and 121 of 139 valid outputs look fine. Fifty-five of them were not.</p>
+<p class="callout proof-callout">Action-only grading accepts 121 of 139 valid outputs. Fifty-five of those 121 fail another scored condition.</p>
 
 <aside class="methods-box">
 <span class="methods-label">How these numbers were produced</span>
@@ -80,17 +80,17 @@ Here is the proof block, from a decision agent I built for B2B outreach. It prop
 </dl>
 </aside>
 
-For orientation: every scored check passed in 66 of 140 attempts (47%); the action check alone passed in 121 of 139 valid outputs (87%). Different denominators, nested criteria. Behind the contract, over the 139 valid outputs: buyer role 133, required evidence 135, channel 123, timing and expiry 111. Timing was weakest by far, the dimension a skimming reader would never catch. A failed attempt is not an obviously bad output; it is at least one contract check failing while the headline still looked right, and a naive reviewer would have signed off on most of them.
+For orientation: every scored check passed in 66 of 140 attempts (47%); the action check alone passed in 121 of 139 valid outputs (87%). Different denominators, nested criteria. Behind the contract, over the 139 valid outputs: buyer role 133, required evidence 135, channel 123, timing and expiry 111. Timing was the weakest measured dimension, the kind of failure a headline score hides. Fifty-five valid proposals passed action-only grading while failing another scored condition.
 
 Three cases, in plain English:
 
 - **Seductive signal.** Faced with compelling but forbidden evidence, the action check passed in 5 of 5 runs, and a forbidden ID appeared in at least one scored reference field in 5 of 5. Full pass: 0 of 5. The ID alone does not prove reliance, but the contract forbids referencing it, and the reference is right there in the output.
 - **Right headline, broken details.** In an abstain-and-reject scenario, the action check passed in 5 of 5 runs while timing failed in 5 of 5, with expiry and unknown-reference failures in subsets of runs. Full pass: 0 of 5.
-- **Freshness stop.** The correct move was to wait for fresher data. The action check passed in 5 of 5 runs; timing failed in 5 of 5. Full pass: 0 of 5. The agent knew *what* to do, not *when*.
+- **Freshness stop.** The correct move was to wait for fresher data. The action check passed in 5 of 5 runs; timing failed in 5 of 5. Full pass: 0 of 5. The proposal got *what* to do right, but not *when*.
 
 That third case comes from a separate six-world compound suite, and its history matters. It was evaluated once under an earlier prompt version (9 of 30 full passes), then versioned and revised alongside prompt and evaluator changes, and rerun under the current one: 30 attempts, 25 acceptable actions, 15 full passes, timing again weakest at 22 of 30 while required evidence held at 30 of 30. It stayed process-separated through the current cycle, but it had seen prior exposure, so I will not call it a holdout. A genuinely fresh sealed suite remains on the to-do list.
 
-None of these failures show up if you grade the headline action. All of them matter the moment the flow runs unsupervised.
+None of these failures show up if you grade the headline action. Each would matter if the proposal governed an unsupervised flow.
 
 ## Two buckets of bugs
 
@@ -107,7 +107,7 @@ Every one of these was a way the lab could have lied to me. Fixing them hardened
 
 ## The next layer: executable worlds and the CLI
 
-This benchmark stopped at the proposal. Nothing here executed a tool, retried a request, or sent anything, so it says nothing about CLI idempotency, dry runs, exit codes, or side effects. Those questions live one layer up, where an agent is your CLI's least forgiving user: it does exactly what your interface invites and brings no common sense to a bad error message. Executable worlds can surface the bugs humans step over: errors that don't say what failed or what to do next; exit status 0 on failure; non-idempotent commands that double-execute on retry; no `--dry-run` for an irreversible action; output a human can skim but a parser can't; hidden side effects. If a careful agent misuses your tool, a hurried human will too. The agent just reports it more reliably.
+This benchmark stopped at the proposal. Nothing here executed a tool, retried a request, or sent anything, so it says nothing about CLI idempotency, dry runs, exit codes, or side effects. Those questions live one layer up, where an agent is your CLI's least forgiving user: it does exactly what your interface invites and brings no common sense to a bad error message. Executable worlds can surface the bugs humans step over: errors that don't say what failed or what to do next; exit status 0 on failure; non-idempotent commands that double-execute on retry; no `--dry-run` for an irreversible action; output a human can skim but a parser can't; hidden side effects. The same interface flaws can trip up a hurried human. Executable worlds make them easier to reproduce.
 
 ## The loop
 
