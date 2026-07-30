@@ -34,76 +34,84 @@ The useful move is not generating a pile of scenarios. It is building **paired w
 
 A clean pair gives you a **designed contrast**. If the decision should track the changed fact and doesn't, you have found insensitivity. If it flips when nothing material changed, you have found jumpiness. That turns vague unease into a named bug.
 
-Two honest limits, learned by auditing my own suite. Even a perfect contrast shows behavioral sensitivity, not an internal mechanism. And most of my pairs are not perfect: only one of fourteen has a complete structural test proving the visible projections differ only in the intended fact. World and case IDs also differ by design, and only three pairs share identical visible scenario tags. The rest are designed contrasts, not controlled experiments.
+One changed fact is the ideal, not something I can assume. I mechanically proved that isolation for only one of my fourteen pairs. The others also expose different IDs or scenario tags, so I treat them as designed contrasts, not controlled experiments. Auditing the pairs found seven failed comparisons across seventy repeated checks, including one where a peer returned invalid output. The lab has to test its worlds too.
 
-Pair results deserve the right counting unit too. Counting each pair under one repeat index as a single unit, rather than copying one verdict onto both peers, 63 of 70 units passed the pair-consistency check and 7 failed, one because a peer output was schema-invalid and unavailable for comparison. The audit gap is itself useful: the lab also tests whether the world design is strong enough. Right now: one pair proven, thirteen to go.
+## Run the same world more than once
 
-## Repetition and seeds
+Language models vary from run to run, so one run says almost nothing. I ran each world in five fresh sessions. Those runs are **samples, not a committee**: a majority vote would hide the instability I want to see.
 
-Language models vary from run to run, so one run says almost nothing. My core set repeats each world five times as parallel, independent sessions. Independent is the load-bearing word: the runs are **samples, not a committee**, and voting would hide the instability I am looking for.
+This was not laboratory-grade replication. I did not lock the provider's randomness or shuffle the run order. The repeats show the variation I observed, nothing more.
 
-A word about seeds. Where a provider supports them, matched seeds across paired peers are good noise control. My reported runs used none: no provider seed was passed or recorded, the repeat index served only to group peers, and invocation order was not randomized. Those controls belong to the next run, not this one.
-
-What five repeats do buy is a per-world stability read: among schema-valid repeats, the action was stable in 21 of 28 worlds and the scored pass/fail outcome in 10. Seven worlds passed every applicable scored check 0 of 5 times; three passed 5 of 5. The pooled average hides that spread. These 28 worlds are a fixed, purposively authored corpus, not a random sample. I report the numbers as descriptive corpus results, not population estimates.
+The spread was the useful part. Among valid replies, only ten of twenty-eight worlds produced the same pass/fail result every time. Seven worlds never cleared every applicable check; three cleared them in every run. One polished demo would have hidden all of that.
 
 ## The score lives outside the agent
 
 The separation of judging from doing is the whole game. The agent's final message is a *claim*; the checkable outcome is *evidence*. A model grading its own judgment gives you fluent self-praise.
 
-In this benchmark the evidence was the proposal itself. The checker, a deterministic program outside the agent, evaluated the parsed fields against the hidden contract: action, buyer role, channel, evidence references, timing and expiry, pair behavior, hard safety gates.
+In this benchmark the proposal itself was the evidence. A fixed program outside the agent checked the proposed action and the details around it: buyer role, channel, evidence references, timing, expiry, paired behavior, and hard safety rules.
 
-An executable world keeps a fuller trace: tool calls, evidence IDs touched, timing, state diffs, rejection reasons. This benchmark kept no such trace. The retained report stores selected parsed decision fields, decision signals, failure codes, scores, and runtime metadata, not the complete proposal, raw output, or rendered prompt. The cost is real: once a checker defect is found, old runs cannot be independently rescored.
+A tool-using world should keep a fuller trace: what the agent called, what evidence it touched, what changed, and why a gate rejected it. This smaller benchmark did not. Its report saved key fields and pass/fail reasons, not the complete model reply. When I later found a checker bug, I could not rerun the improved checker against those old replies.
 
-The checker has limits too. Supporting evidence nested inside account-fit factors is collected after the top-level overlap check runs, so some cross-field contradictions can slip through. Free-text fidelity and any real side effect sit outside the score entirely. A full pass means exactly "every implemented scored check passed." It does not certify semantic fidelity or execution correctness.
+The checker had limits of its own. One review found that the same evidence could appear as both support and contradiction in different parts of a proposal without always being caught. Free-form wording and real side effects were not scored either. A pass means only that every implemented check passed. It does not mean the full workflow was correct.
 
 ## What the worlds caught
 
-Here is the proof block, from a decision agent I built for B2B outreach. It proposes a next action (proceed to human review, wait, reject, or research more) under a strict business contract, and nothing sends without exact human approval. The case is narrow, but it gives the method concrete evidence. The core corpus is 28 authored worlds repeated five times: 140 attempts, 139 schema-valid proposals, one invalid.
+I tested the smallest useful version of this method on a B2B decision agent. It reads a situation and proposes what should happen next. It does not send anything, call tools, or change state. That narrow setup is enough to reveal the pattern.
+
+<p class="proof-thesis">The headline decision can look right while the workflow underneath is wrong.</p>
+
+### One world, end to end
+
+<ol class="proof-steps">
+<li><strong>Write the trap.</strong> Make the obvious answer break one important rule.</li>
+<li><strong>Ask the agent.</strong> Give it normal visible facts, but no answer key.</li>
+<li><strong>Check from the outside.</strong> Test the action and its details against the world's rules.</li>
+<li><strong>Keep the failure.</strong> Repeat it, name it, and save the world as a regression test.</li>
+</ol>
+
+Here is what that looks like in practice. In one freshness-sensitive world, the proposal passed the action check in all five runs. It failed the timing check in all five. An action-only demo would call all five runs successful. The outside timing check showed that all five were still broken.
+
+Across the full set, that same kind of false green appeared 55 times: an acceptable headline action with another contract condition failing underneath it.
 
 <figure>
 <img src="/images/blog/simulation-worlds/proposal-outcome-decomposition.svg" alt="Chart decomposing all 140 attempted runs on one denominator: 66 valid outputs passed the action check and every scored proposal-contract check, 55 chose an acceptable action but failed at least one other scored condition, 18 failed the action check, and 1 output was schema-invalid. Grading the action alone would have called the 55 fine." loading="lazy" />
-<figcaption>All 140 attempts on one denominator. The orange 55 are the finding: acceptable action, failed contract. Fixed authored corpus, scored proposal-contract checks; not production reliability.</figcaption>
+<figcaption>All 140 attempts on one denominator. The orange 55 are false greens: the headline action passed, but another required condition did not. These are results from a fixed synthetic test set, not a production reliability estimate.</figcaption>
 </figure>
 
-<p class="callout proof-callout">Action-only grading accepts 121 of 139 valid outputs. Fifty-five of those 121 fail another scored condition.</p>
+<p class="callout proof-callout">The useful finding is not “the agent scored 47%.” It is “action-only testing would have waved through 55 broken proposals.” Now there is something concrete to fix.</p>
+
+### What those false greens looked like
+
+- **Good signal, forbidden proof.** The proposed action looked acceptable in all five runs, but every proposal carried an evidence reference the policy explicitly forbade. The output exposed the reference; I do not need to guess what happened inside the model.
+- **Right action, broken deadline.** The action passed in all five runs. The timing failed in all five, with invalid expiry details appearing along the way.
+- **Freshness mismatch.** The action passed in all five runs. The timing failed in all five. Same headline, same hidden weakness, reproducible on demand.
+
+That is the methodology in miniature: design the trap, let the agent walk through it, judge the result outside the model, and turn the repeated failure into a named test case.
 
 <aside class="methods-box">
-<span class="methods-label">How these numbers were produced</span>
+<span class="methods-label">What this test actually did</span>
 <dl>
-<div><dt>Corpus</dt><dd>28 authored core worlds × five repeats: 140 attempts, 139 schema-valid. One model and provider alias.</dd></div>
-<div><dt>Protocol</dt><dd>One request per attempt, max one turn, one structured JSON proposal. No application tools executed.</dd></div>
-<div><dt>Versions</dt><dd>Prompt v5, evaluator v1, adapter v1. Declared reasoning high, concurrency two.</dd></div>
-<div><dt>Contract mix</dt><dd>Sixteen frozen legacy worlds used compatibility gates; twelve v2 additions used stronger structured methodology and source-authority gates. Pooled all-pass counts span the applicable contract for each world.</dd></div>
-<div><dt>Controls</dt><dd>No provider seed passed or recorded; invocation order not randomized; peers grouped by repeat index only.</dd></div>
-<div><dt>Sample</dt><dd>Fixed purposive corpus, not a random sample. Scores describe this corpus only.</dd></div>
-<div><dt>Authorship</dt><dd>Worlds, expected labels, and evaluator were author-built; no blind second adjudication was performed.</dd></div>
-<div><dt>Retention</dt><dd>The report keeps selected parsed fields, decision signals, failure codes, scores, runtime metadata, and the suite hash. It does not keep the complete proposal or raw model output.</dd></div>
-<div><dt>Compound suite</dt><dd>A separate six-world challenge suite had prior exposure under prompt v3 before its v5 rerun.</dd></div>
+<div><dt>The scenarios</dt><dd>Twenty-eight synthetic decisions, each attempted five times. That produced 140 attempts from one model.</dd></div>
+<div><dt>One attempt</dt><dd>The model read one scenario and returned one structured proposal. No tools ran, no message was sent, and no external state changed.</dd></div>
+<div><dt>The outside check</dt><dd>A fixed program checked the action and the details around it. Sixteen earlier worlds used the core checks; twelve newer worlds also checked methodology and source authority. A pass meant every check applicable to that world passed.</dd></div>
+<div><dt>Why repeat</dt><dd>The model can answer differently each time. Five fresh sessions reveal whether a failure is repeatable instead of hiding it behind one lucky demo.</dd></div>
+<div><dt>What the numbers mean</dt><dd>They describe this deliberately constructed test set only. They are not an estimate of production reliability or failure frequency in the wild.</dd></div>
+<div><dt>Who wrote the truth</dt><dd>I wrote the worlds, expected outcomes, and checker from a policy contract. No independent second reviewer adjudicated the labels.</dd></div>
+<div><dt>What was saved</dt><dd>The report kept selected decision fields, pass/fail signals, failure reasons, and run metadata, but not the complete raw proposals. That limits later rescoring.</dd></div>
+<div><dt>The extra challenge set</dt><dd>Six messier scenarios came from an earlier testing cycle and were revised before reuse. They are useful regression cases, not a fresh holdout exam.</dd></div>
 </dl>
 </aside>
 
-For orientation: every scored check passed in 66 of 140 attempts (47%); the action check alone passed in 121 of 139 valid outputs (87%). Different denominators, nested criteria. Behind the contract, over the 139 valid outputs: buyer role 133, required evidence 135, channel 123, timing and expiry 111. Timing was the weakest measured dimension, the kind of failure a headline score hides. Fifty-five valid proposals passed action-only grading while failing another scored condition.
-
-Three cases, in plain English:
-
-- **Seductive signal.** Faced with compelling but forbidden evidence, the action check passed in 5 of 5 runs, and a forbidden ID appeared in at least one scored reference field in 5 of 5. Full pass: 0 of 5. The ID alone does not prove reliance, but the contract forbids referencing it, and the reference is right there in the output.
-- **Right headline, broken details.** In an abstention scenario, the action check passed in 5 of 5 runs while timing failed in 5 of 5, with expiry and unknown-reference failures in subsets of runs. Full pass: 0 of 5.
-- **Freshness stop.** In a compound freshness scenario, the action check passed in 5 of 5 runs; timing failed in 5 of 5. Full pass: 0 of 5. The proposal passed the action check but not the timing check.
-
-That third case comes from a separate six-world compound suite, and its history matters. It was evaluated once under an earlier prompt version (9 of 30 full passes), then versioned and revised alongside prompt and evaluator changes, and rerun under the current one: 30 attempts, 25 acceptable actions, 15 full passes, timing again weakest at 22 of 30 while required evidence held at 30 of 30. It stayed process-separated through the current cycle, but it had seen prior exposure, so I will not call it a holdout. A genuinely fresh sealed suite remains on the to-do list.
-
-None of these failures show up if you grade the headline action. Each would matter if the proposal governed an unsupervised flow.
-
 ## Two buckets of bugs
 
-Honesty requires splitting the findings. **Bucket one: agent proposal defects**, like the cases above. **Bucket two: harness defects**, bugs in my own lab, found with mutation tests (feed the checker deliberately broken inputs and demand it fails), structural invariants, and independent review. Conflating the buckets is how you "fix the model" when the test was broken, and a broken judge can make a broken agent look good. The harness bugs were not hypothetical:
+Honesty requires splitting the findings. **Bucket one: agent proposal defects**, like the cases above. **Bucket two: harness defects**, bugs in my own lab, found by deliberately feeding the checker broken inputs, comparing paired worlds, and asking for independent review. Conflating the buckets is how you "fix the model" when the test was broken, and a broken judge can make a broken agent look good. The harness bugs were not hypothetical:
 
-- Invented proof IDs were accepted as evidence → unknown proof references now fail closed.
-- Timezone-less and impossible timestamps passed → strict RFC3339 validation.
-- A run could skip its counterfactual peer and still "pass the pair" → incomplete pairs fail closed.
-- Weak secondary evidence could carry a decision → explicit source-authority semantics, with fact-specific gates.
-- `research_more` could be vague, unaffordable, or uncited → the step must be named, costed, bounded, and referenced.
-- One supposedly paired case differed in *more* than the intended fact → a full projection invariant now guards that pair; the same audit is still open for the other thirteen.
+- The agent could cite evidence that did not exist → unknown references now fail immediately.
+- Impossible dates and times without a timezone could pass → both are now rejected.
+- One side of a pair could be missing while the pair still "passed" → an incomplete pair now fails.
+- A weak source could carry an important decision → the checker now asks whether that source is strong enough for the specific claim.
+- "Research more" could mean almost anything → the proposal must name the question, source, cost, and stopping point.
+- One supposedly paired case changed more than one thing → a test now compares the full visible inputs for that pair; the other thirteen pairs still need the same audit.
 
 Every one of these was a way the lab could have lied to me. Fixing them hardened detection; it did not, by itself, improve the agent, and I ran no frozen before-and-after intervention that could have measured improvement. Detection is the claim.
 
