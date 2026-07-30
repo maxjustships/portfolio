@@ -18,15 +18,15 @@ One good demo tells you an agent *can* work, not that it *does*. I build small s
 
 A polished demo is a terrible test. Give an agent one clean situation and it can look thoughtful, careful, even wise. That proves possibility, not reliability. An agentic workflow is a model plus instructions, tools, state, and feedback; the demo exercises one path through all five at once, usually the one chosen to look good.
 
-What I wanted was a place where failure is cheap, visible, and repeatable. This post is the method, and what it caught the first time I ran it for real.
+What I wanted was a place where failure is cheap, visible, and repeatable. This post is the method, and what the reported lab cycle caught.
 
 ## What a world is
 
-A **world** is a small, self-contained test situation: visible initial conditions, rules, a task, a hidden truth (the outcome a competent operator would reach), and a result you can check from the outside. Worlds come in layers, from a frozen decision fixture up to an executable environment with tools and observable state you can diff before and after the agent acts.
+A **world** is a small, self-contained test situation: visible initial conditions, rules, a task, a hidden, author-defined expected outcome under a written policy contract, and a result you can check from the outside. Worlds come in layers, from a frozen decision fixture up to an executable environment with tools and observable state you can diff before and after the agent acts.
 
 The case study here runs at the smallest useful layer: frozen inputs, hidden expected constraints, one structured JSON proposal, a deterministic checker. Nothing executed and no state changed while the model worked; the executable layers are part of the recommendation, not evidence this benchmark produced.
 
-Two design rules hold at every layer. The agent never sees the expected decision or the judging criteria, only the material it would see during normal work; a visible answer key tests reading comprehension, not judgment. And **volume does not fix a badly designed world**: synthetic worlds are cheap, safe, high-volume, and full of rare cases on demand, but they say nothing about prevalence in the wild and they inherit their author's blind spots.
+Two design rules hold at every layer. The agent does not receive the fixture-specific expected decision or hidden evaluator labels; it does receive the public methodology, output schema, and operating rules. A visible answer key would test reading comprehension, not judgment. And **volume does not fix a badly designed world**: synthetic worlds are cheap, safe, high-volume, and full of rare cases on demand, but they say nothing about prevalence in the wild and they inherit their author's blind spots.
 
 ## Change one fact
 
@@ -44,7 +44,7 @@ Language models vary from run to run, so one run says almost nothing. My core se
 
 A word about seeds. Where a provider supports them, matched seeds across paired peers are good noise control. My reported runs used none: no provider seed was passed or recorded, the repeat index served only to group peers, and invocation order was not randomized. Those controls belong to the next run, not this one.
 
-What five repeats do buy is a per-world stability read: the action was stable across repeats in 21 of 28 worlds, the complete scored outcome in only 10. Seven worlds passed every scored check 0 of 5 times; three passed 5 of 5. The pooled average hides that spread. These 28 worlds are a fixed, purposively authored corpus, not a random sample. I report the numbers as descriptive corpus results, not population estimates.
+What five repeats do buy is a per-world stability read: among schema-valid repeats, the action was stable in 21 of 28 worlds and the scored pass/fail outcome in 10. Seven worlds passed every applicable scored check 0 of 5 times; three passed 5 of 5. The pooled average hides that spread. These 28 worlds are a fixed, purposively authored corpus, not a random sample. I report the numbers as descriptive corpus results, not population estimates.
 
 ## The score lives outside the agent
 
@@ -52,7 +52,7 @@ The separation of judging from doing is the whole game. The agent's final messag
 
 In this benchmark the evidence was the proposal itself. The checker, a deterministic program outside the agent, evaluated the parsed fields against the hidden contract: action, buyer role, channel, evidence references, timing and expiry, pair behavior, hard safety gates.
 
-An executable world keeps a fuller trace: tool calls, evidence IDs touched, timing, state diffs, rejection reasons. This benchmark kept no such trace. The retained report stores parsed decisions, failure codes, and runtime metadata, not raw model outputs or rendered prompts. The cost is real: once a checker defect is found, old runs cannot be independently rescored.
+An executable world keeps a fuller trace: tool calls, evidence IDs touched, timing, state diffs, rejection reasons. This benchmark kept no such trace. The retained report stores selected parsed decision fields, decision signals, failure codes, scores, and runtime metadata, not the complete proposal, raw output, or rendered prompt. The cost is real: once a checker defect is found, old runs cannot be independently rescored.
 
 The checker has limits too. Supporting evidence nested inside account-fit factors is collected after the top-level overlap check runs, so some cross-field contradictions can slip through. Free-text fidelity and any real side effect sit outside the score entirely. A full pass means exactly "every implemented scored check passed." It does not certify semantic fidelity or execution correctness.
 
@@ -73,9 +73,11 @@ Here is the proof block, from a decision agent I built for B2B outreach. It prop
 <div><dt>Corpus</dt><dd>28 authored core worlds × five repeats: 140 attempts, 139 schema-valid. One model and provider alias.</dd></div>
 <div><dt>Protocol</dt><dd>One request per attempt, max one turn, one structured JSON proposal. No application tools executed.</dd></div>
 <div><dt>Versions</dt><dd>Prompt v5, evaluator v1, adapter v1. Declared reasoning high, concurrency two.</dd></div>
+<div><dt>Contract mix</dt><dd>Sixteen frozen legacy worlds used compatibility gates; twelve v2 additions used stronger structured methodology and source-authority gates. Pooled all-pass counts span the applicable contract for each world.</dd></div>
 <div><dt>Controls</dt><dd>No provider seed passed or recorded; invocation order not randomized; peers grouped by repeat index only.</dd></div>
 <div><dt>Sample</dt><dd>Fixed purposive corpus, not a random sample. Scores describe this corpus only.</dd></div>
-<div><dt>Retention</dt><dd>The report keeps parsed decisions, scores, runtime metadata, and the suite hash. Raw model outputs were not preserved.</dd></div>
+<div><dt>Authorship</dt><dd>Worlds, expected labels, and evaluator were author-built; no blind second adjudication was performed.</dd></div>
+<div><dt>Retention</dt><dd>The report keeps selected parsed fields, decision signals, failure codes, scores, runtime metadata, and the suite hash. It does not keep the complete proposal or raw model output.</dd></div>
 <div><dt>Compound suite</dt><dd>A separate six-world challenge suite had prior exposure under prompt v3 before its v5 rerun.</dd></div>
 </dl>
 </aside>
@@ -85,8 +87,8 @@ For orientation: every scored check passed in 66 of 140 attempts (47%); the acti
 Three cases, in plain English:
 
 - **Seductive signal.** Faced with compelling but forbidden evidence, the action check passed in 5 of 5 runs, and a forbidden ID appeared in at least one scored reference field in 5 of 5. Full pass: 0 of 5. The ID alone does not prove reliance, but the contract forbids referencing it, and the reference is right there in the output.
-- **Right headline, broken details.** In an abstain-and-reject scenario, the action check passed in 5 of 5 runs while timing failed in 5 of 5, with expiry and unknown-reference failures in subsets of runs. Full pass: 0 of 5.
-- **Freshness stop.** The correct move was to wait for fresher data. The action check passed in 5 of 5 runs; timing failed in 5 of 5. Full pass: 0 of 5. The proposal got *what* to do right, but not *when*.
+- **Right headline, broken details.** In an abstention scenario, the action check passed in 5 of 5 runs while timing failed in 5 of 5, with expiry and unknown-reference failures in subsets of runs. Full pass: 0 of 5.
+- **Freshness stop.** In a compound freshness scenario, the action check passed in 5 of 5 runs; timing failed in 5 of 5. Full pass: 0 of 5. The proposal passed the action check but not the timing check.
 
 That third case comes from a separate six-world compound suite, and its history matters. It was evaluated once under an earlier prompt version (9 of 30 full passes), then versioned and revised alongside prompt and evaluator changes, and rerun under the current one: 30 attempts, 25 acceptable actions, 15 full passes, timing again weakest at 22 of 30 while required evidence held at 30 of 30. It stayed process-separated through the current cycle, but it had seen prior exposure, so I will not call it a holdout. A genuinely fresh sealed suite remains on the to-do list.
 
@@ -116,7 +118,7 @@ This benchmark stopped at the proposal. Nothing here executed a tool, retried a 
 <figcaption>The loop in its full form. Worlds that caught a bug are never deleted; they become the regression suite.</figcaption>
 </figure>
 
-In practice: create a world, reproduce a failure, name the bug, change the flow or the CLI or the gate, rerun the *same* worlds, and keep them forever as regression tests. My run completed the first half of that loop, detection plus harness hardening; the rerun-after-fix half is the next cycle.
+In practice: create a world, reproduce a failure, name the bug, change the flow or the CLI or the gate, rerun the *same* worlds, and keep them forever as regression tests. This lab established detection and hardened the evaluator. A frozen, prespecified rerun after an agent or flow intervention remains for a future cycle, and until it runs, there is no improvement percentage to report.
 
 ## The honest boundary
 
