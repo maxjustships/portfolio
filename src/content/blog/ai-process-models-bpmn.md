@@ -7,7 +7,7 @@ draft: true
 dek: "Let the model interpret evidence. Make ordinary code own structure, validation, layout, and export."
 ---
 
-Ask a language model to draw a BPMN diagram and it will usually optimize for the most visible target: a plausible-looking diagram. That is also the least useful definition of success.
+One practical failure mode when asking a language model to draw a BPMN diagram is optimization for the most visible target: a plausible-looking diagram. That is also the least useful definition of success.
 
 A box can be in the right lane and still name an invented owner. Two arrows can meet neatly while hiding a required merge gateway. A branch labelled “exception” can look perfectly reasonable even though nobody has defined what an exception is. Once the result is rendered, visual polish makes these semantic guesses harder to notice.
 
@@ -20,13 +20,18 @@ The safer architecture is to separate interpretation from compilation:
 
 The LLM still does the part it is good at: turning messy notes, transcripts, images, or tables into a proposed structure. It does not get to decide whether its proposal is structurally sound, visually convenient, or approved as truth.
 
+<figure>
+<img src="/assets/blog/process-foundry/demo-evidence.webp" alt="Process Foundry’s separate fictional retail-returns demo. The BPMN gateway ‘Policy requirements met?’ is selected, and the evidence panel highlights linked returns-policy notes stating that returns are accepted within 30 days when the order and item condition can be verified." loading="lazy" />
+<figcaption>This is a separate fictional retail-returns demo—not the invoice fixture or a live AI generation. Selecting “Policy requirements met?” links that gateway to the highlighted returns-policy evidence. The screenshot demonstrates the review relationship, not invoice extraction, production deployment, or AI accuracy.</figcaption>
+</figure>
+
 ## One invoice, one undefined branch
 
 Consider a fictional note from an accounts-payable handbook:
 
-> When an invoice arrives, standard invoices under $5,000 may be auto-approved. Exceptions go to Finance.
+> Finance handles every invoice. When an invoice arrives, Finance checks whether it is standard. Standard invoices under $5,000 may be auto-approved. Finance reviews every other invoice.
 
-This is enough to suggest a process, but not enough to finish one. What makes an invoice “standard”? Does “may” describe permission or the default path? Who in Finance reviews an exception?
+The note explicitly supports Finance as the owner and the $5,000 threshold. It is still not enough to finish the process. What makes an invoice “standard”? Does “may” describe permission or the default path?
 
 Those are not layout questions. Moving a gateway or rerouting a connector cannot answer them. They belong in a reviewable intermediate representation (IR) alongside the proposed gateway, its evidence, and a question for a human.
 
@@ -69,21 +74,21 @@ const invoiceApproval = {
     { id: "f2", sourceId: "classify", targetId: "autoApprove",
       condition: "Standard and under $5,000", sourceRefs: ref },
     { id: "f3", sourceId: "classify", targetId: "manualReview",
-      condition: "Exception or $5,000 and above", sourceRefs: ref },
+      condition: "Not standard or $5,000 and above", sourceRefs: ref },
     { id: "f4", sourceId: "autoApprove", targetId: "autoDone", sourceRefs: ref },
     { id: "f5", sourceId: "manualReview", targetId: "reviewDone", sourceRefs: ref },
   ],
   annotations: [],
   questions: [{
     id: "q_exception_rule",
-    text: "What defines a standard invoice, and is auto-approval optional or required?",
+    text: "What defines a standard invoice, and when should Finance use the permitted auto-approval path?",
     relatedElementIds: ["classify", "f2", "f3"],
     severity: "blocking",
   }],
 } satisfies ProcessIR;
 ```
 
-Notice what this object does and does not claim. The source text remains evidence; `sourceId` and `locator` make each interpretation traceable back to it. The IR records a possible branch structure, confidence, and assumptions. The question records exactly where a person must intervene. The branch labels are reviewable proposals, not discovered policy.
+Notice what this object does and does not claim. The source text remains evidence; `sourceId` and `locator` make each interpretation traceable back to it. Finance ownership and the threshold split come directly from the fictional note. The IR also records confidence and assumptions around the undefined word “standard” and the permissive “may.” The question records exactly where a person must intervene. The branch labels are reviewable formalizations of the note, not proof of a real company policy.
 
 A compiler can compile this object because it is structurally coherent. It cannot determine whether the proposed threshold logic is the company’s real policy. In the current implementation, a low-confidence gateway must have a related question, but the validator does not answer that question or treat its `blocking` label as a universal publication gate. That last decision belongs in the surrounding workflow.
 
