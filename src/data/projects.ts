@@ -21,6 +21,19 @@ export interface SmallTool {
 
 export const PROJECTS: Project[] = [
   {
+    title: 'Process Foundry',
+    problem:
+      'Process rules scattered across notes and transcripts are difficult to turn into diagrams people can trust.',
+    solution:
+      'Evidence-linked process proposals, explicit human questions and review, then deterministic compilation into editable BPMN.',
+    stack: ['TypeScript', 'React Router', 'BPMN', 'Cloudflare'],
+    live: 'https://processfoundry.maxjustships.dev',
+    liveLabel: 'Open app',
+    source: 'https://github.com/maxjustships/process-foundry',
+    image: '/assets/blog/process-foundry/demo-evidence.webp',
+    color: 'blue',
+  },
+  {
     title: 'mcpgate',
     problem:
       'MCP servers dump their whole tool catalog into an agent’s context — and sandboxed agents can’t reach a warm MCP runtime at all: every socket is blocked, only files work.',

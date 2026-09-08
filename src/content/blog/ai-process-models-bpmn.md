@@ -3,7 +3,7 @@ title: "Don’t ask an LLM to draw BPMN. Ask it for a process model."
 description: "A practical architecture for turning uncertain source material into validated process semantics, human questions, and deterministic BPMN."
 pubDate: 2026-09-08
 tags: [ai, bpmn, engineering]
-draft: true
+draft: false
 dek: "Let the model interpret evidence. Make ordinary code own structure, validation, layout, and export."
 ---
 
@@ -22,7 +22,7 @@ The LLM still does the part it is good at: turning messy notes, transcripts, ima
 
 <figure>
 <img src="/assets/blog/process-foundry/demo-evidence.webp" alt="Process Foundry’s separate fictional retail-returns demo. The BPMN gateway ‘Policy requirements met?’ is selected, and the evidence panel highlights linked returns-policy notes stating that returns are accepted within 30 days when the order and item condition can be verified." loading="lazy" />
-<figcaption>This is a separate fictional retail-returns demo—not the invoice fixture or a live AI generation. Selecting “Policy requirements met?” links that gateway to the highlighted returns-policy evidence. The screenshot demonstrates the review relationship, not invoice extraction, production deployment, or AI accuracy.</figcaption>
+<figcaption>This is a separate fictional retail-returns demo—not the invoice fixture or a live AI generation. Selecting “Policy requirements met?” links that gateway to the highlighted returns-policy evidence. The screenshot demonstrates the review relationship, not invoice extraction, production deployment, or AI accuracy. The [demo fixture is public source](https://github.com/maxjustships/process-foundry/blob/511ae9efdf65f3d80dc3c430dcbe817614909a5e/app/demo/fixture.ts).</figcaption>
 </figure>
 
 ## One invoice, one undefined branch
@@ -35,7 +35,7 @@ The note explicitly supports Finance as the owner and the $5,000 threshold. It i
 
 Those are not layout questions. Moving a gateway or rerouting a connector cannot answer them. They belong in a reviewable intermediate representation (IR) alongside the proposed gateway, its evidence, and a question for a human.
 
-Here is a shortened but schema-valid `ProcessIR` object from a hand-authored fictional fixture. It is an example of the contract, not the output of a claimed model run.
+Here is a shortened but schema-valid `ProcessIR` object from a hand-authored fictional fixture. It is an example of the [public `ProcessIR` contract](https://github.com/maxjustships/process-foundry/blob/511ae9efdf65f3d80dc3c430dcbe817614909a5e/domain/process-ir.ts), not the output of a claimed model run.
 
 ```ts
 const ref = [{ sourceId: "source_ap_note", locator: "paragraph 3" }];
@@ -114,7 +114,7 @@ BPMN files contain both the process definition and information about how to draw
 
 Semantic elements say that a task exists, a sequence flow connects two nodes, or a gateway selects a branch. BPMN-DI supplies shapes, bounds, and edge waypoints so a tool knows where to render them. A beautifully routed edge cannot repair a dangling reference or justify an unsupported decision. Conversely, correct process semantics without DI may import but have no useful saved layout.
 
-The compiler therefore owns both serialization and layout. It sorts model elements, assigns stable horizontal levels and lane positions, escapes XML, emits BPMN shapes and edges, and produces the same bytes even when the same logical input arrives with its node, flow, and annotation arrays reordered. Focused tests parse the result with `bpmn-moddle`, require no import warnings, check that nodes stay inside their lanes, and check that shapes do not overlap. The [bpmn-js walkthrough](https://bpmn.io/toolkit/bpmn-js/walkthrough/) explains the same boundary from the editor side: `bpmn-moddle` reads the BPMN object tree, while `bpmn-js` renders visible shapes and connections.
+The [compiler](https://github.com/maxjustships/process-foundry/blob/511ae9efdf65f3d80dc3c430dcbe817614909a5e/domain/bpmn-compiler.ts) therefore owns both serialization and layout. It sorts model elements, assigns stable horizontal levels and lane positions, escapes XML, emits BPMN shapes and edges, and produces the same bytes even when the same logical input arrives with its node, flow, and annotation arrays reordered. [Focused compiler tests](https://github.com/maxjustships/process-foundry/blob/511ae9efdf65f3d80dc3c430dcbe817614909a5e/tests/unit/compiler.test.ts) parse the result with `bpmn-moddle`, require no import warnings, check that nodes stay inside their lanes, and check that shapes do not overlap. The [bpmn-js walkthrough](https://bpmn.io/toolkit/bpmn-js/walkthrough/) explains the same boundary from the editor side: `bpmn-moddle` reads the BPMN object tree, while `bpmn-js` renders visible shapes and connections.
 
 Those tests establish deterministic, parseable artifacts for the covered fixtures. They do not establish that a model extracted from real evidence is correct, readable in every case, or accepted by every BPMN tool.
 
@@ -136,7 +136,7 @@ Human correction should happen at the semantic layer. In the invoice example, a 
 
 One deployment boundary is easy to describe incorrectly. Self-hosting means the application runs on infrastructure controlled by its owner. It does not mean model inference is local or offline.
 
-In this architecture, the configured model provider—in the current module, OpenAI—receives the relevant source content over its APIs for extraction and transcription. The application can avoid shipping source text to unrelated services and can configure provider-side controls, but its data-flow documentation and threat model must still include the model provider. If a workflow requires fully local inference, that is a separate provider and engineering decision—not a property conferred by self-hosting the web application.
+In this architecture, the configured model provider—in the [current provider module](https://github.com/maxjustships/process-foundry/blob/511ae9efdf65f3d80dc3c430dcbe817614909a5e/ai/provider.server.ts), OpenAI—receives the relevant source content over its APIs for extraction and transcription. The application can avoid shipping source text to unrelated services and can configure provider-side controls, but its data-flow documentation and threat model must still include the model provider. If a workflow requires fully local inference, that is a separate provider and engineering decision—not a property conferred by self-hosting the web application.
 
 ## The division of labour
 
