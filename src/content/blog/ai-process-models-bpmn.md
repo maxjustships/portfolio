@@ -22,7 +22,7 @@ The LLM still does the part it is good at: turning messy notes, transcripts, ima
 
 <figure>
 <img src="/assets/blog/process-foundry/demo-evidence.webp" alt="Process Foundry’s separate fictional retail-returns demo. The BPMN gateway ‘Policy requirements met?’ is selected, and the evidence panel highlights linked returns-policy notes stating that returns are accepted within 30 days when the order and item condition can be verified." loading="lazy" />
-<figcaption>This is a separate fictional retail-returns demo—not the invoice fixture or a live AI generation. Selecting “Policy requirements met?” links that gateway to the highlighted returns-policy evidence. The screenshot demonstrates the review relationship, not invoice extraction, production deployment, or AI accuracy. The [demo fixture is public source](https://github.com/maxjustships/process-foundry/blob/511ae9efdf65f3d80dc3c430dcbe817614909a5e/app/demo/fixture.ts).</figcaption>
+<figcaption>This is a separate fictional retail-returns demo—not the invoice fixture or a live AI generation. Selecting “Policy requirements met?” links that gateway to the highlighted returns-policy evidence. The screenshot demonstrates the review relationship, not invoice extraction, production deployment, or AI accuracy. The <a href="https://github.com/maxjustships/process-foundry/blob/511ae9efdf65f3d80dc3c430dcbe817614909a5e/app/demo/fixture.ts">demo fixture is public source</a>.</figcaption>
 </figure>
 
 ## One invoice, one undefined branch
