@@ -7,7 +7,7 @@ export interface Project {
   stack: string[];
   live: string;
   liveLabel: string;
-  source: string;
+  source?: string;
   image?: string;
   monogram?: string;
   color: ProjectColor;
@@ -32,6 +32,18 @@ export const PROJECTS: Project[] = [
     source: 'https://github.com/maxjustships/process-foundry',
     image: '/assets/blog/process-foundry/demo-evidence.webp',
     color: 'blue',
+  },
+  {
+    title: 'CleanSlate',
+    problem:
+      'Messy client exports slow down HubSpot migrations and hide decisions that need human review.',
+    solution:
+      'A reviewable cleanup package for migration agencies: cleaned CSV, field mapping, exceptions, and a client-facing change report before import.',
+    stack: ['TypeScript', 'React', 'Cloudflare'],
+    live: 'https://cleanslate.maxjustships.dev/',
+    liveLabel: 'View live',
+    image: '/assets/cleanslate.webp',
+    color: 'orange',
   },
   {
     title: 'mcpgate',

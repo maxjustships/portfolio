@@ -153,14 +153,16 @@ import { PROJECTS, SMALL_TOOLS, CONTACT } from '../data/projects';
                     >
                       {project.liveLabel} →
                     </a>
-                    <a
-                      href={project.source}
-                      target="_blank"
-                      rel="noopener"
-                      class="brutal-button bg-black px-5 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-white hover:text-black"
-                    >
-                      Source
-                    </a>
+                    {project.source && (
+                      <a
+                        href={project.source}
+                        target="_blank"
+                        rel="noopener"
+                        class="brutal-button bg-black px-5 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-white hover:text-black"
+                      >
+                        Source
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
