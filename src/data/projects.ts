@@ -21,17 +21,6 @@ export interface SmallTool {
 
 export const PROJECTS: Project[] = [
   {
-    title: 'Checklist++',
-    problem: 'Tasks sent to yourself disappear into chat history.',
-    solution:
-      'A personal Telegram checklist: send a few lines, tap to complete tasks, drill into subtasks, and get daily reminders in your time zone.',
-    stack: ['TypeScript', 'Telegram Bot API', 'Cloudflare Workers', 'SQLite Durable Objects'],
-    live: 'https://t.me/checklistplusplusbot',
-    liveLabel: 'Open in Telegram',
-    monogram: 'C++',
-    color: 'blue',
-  },
-  {
     title: 'Process Foundry',
     problem:
       'Process rules scattered across notes and transcripts are difficult to turn into diagrams people can trust.',
@@ -55,6 +44,17 @@ export const PROJECTS: Project[] = [
     liveLabel: 'View live',
     image: '/assets/cleanslate.webp',
     color: 'orange',
+  },
+  {
+    title: 'Checklist++',
+    problem: 'Tasks sent to yourself disappear into chat history.',
+    solution:
+      'A personal Telegram checklist: send a few lines, tap to complete tasks, drill into subtasks, and get daily reminders in your time zone.',
+    stack: ['TypeScript', 'Telegram Bot API', 'Cloudflare Workers', 'SQLite Durable Objects'],
+    live: 'https://t.me/checklistplusplusbot',
+    liveLabel: 'Open in Telegram',
+    image: '/assets/checklistpp.webp',
+    color: 'blue',
   },
   {
     title: 'mcpgate',
