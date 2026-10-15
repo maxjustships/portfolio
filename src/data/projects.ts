@@ -47,9 +47,9 @@ export const PROJECTS: Project[] = [
   },
   {
     title: 'Checklist++',
-    problem: 'Tasks sent to yourself disappear into chat history.',
+    problem: 'A growing task list makes it easy to keep planning and avoid the work.',
     solution:
-      'A personal Telegram checklist: send a few lines, tap to complete tasks, drill into subtasks, and get daily reminders in your time zone.',
+      'A behavior-driven productivity system in Telegram: plan dated tasks, clear overdue work, then focus on one task at a time. Break big tasks into small wins and see what you keep putting off.',
     stack: ['TypeScript', 'Telegram Bot API', 'Cloudflare Workers', 'SQLite Durable Objects'],
     live: 'https://t.me/checklistplusplusbot',
     liveLabel: 'Open in Telegram',
