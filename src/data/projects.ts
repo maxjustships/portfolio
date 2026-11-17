@@ -57,6 +57,18 @@ export const PROJECTS: Project[] = [
     color: 'blue',
   },
   {
+    title: 'RecPill',
+    problem: 'Call recorders either work inside one app or send a bot into your meeting, so recording a Telegram or WhatsApp call is awkward.',
+    solution:
+      'A free, open-source recorder that captures your mic and the other side of any call into one audio file, locally. No bot joins, it follows your headset or speakers automatically, and it runs on Windows and Linux (macOS beta).',
+    stack: ['WASAPI', 'PipeWire', 'Core Audio (beta)', 'Cloudflare Pages + D1'],
+    live: 'https://recpill.pages.dev',
+    liveLabel: 'View live',
+    source: 'https://github.com/maxjustships/recpill',
+    monogram: 'RP',
+    color: 'blue',
+  },
+  {
     title: 'mcpgate',
     problem:
       'MCP servers dump their whole tool catalog into an agent’s context — and sandboxed agents can’t reach a warm MCP runtime at all: every socket is blocked, only files work.',
