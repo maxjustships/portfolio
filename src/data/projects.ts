@@ -61,7 +61,7 @@ export const PROJECTS: Project[] = [
     problem: 'Call recorders either work inside one app or send a bot into your meeting, so recording a Telegram or WhatsApp call is awkward.',
     solution:
       'A free, open-source recorder that captures your mic and the other side of any call into one audio file, locally. No bot joins, it follows your headset or speakers automatically, and it runs on Windows and Linux (macOS beta).',
-    stack: ['WASAPI', 'PipeWire', 'Core Audio (beta)', 'Cloudflare Pages + D1'],
+    stack: ['C# + NAudio (WASAPI)', 'Python + ffmpeg (PipeWire)', 'Swift + Core Audio (beta)', 'GitHub Actions'],
     live: 'https://recpill.pages.dev',
     liveLabel: 'View live',
     source: 'https://github.com/maxjustships/recpill',
