@@ -57,6 +57,19 @@ export const PROJECTS: Project[] = [
     color: 'blue',
   },
   {
+    title: 'Meanwhile',
+    problem:
+      'An AI agent needs a minute or two to answer: just long enough to open another tab and come back twenty minutes later.',
+    solution:
+      'A tiny always-on-top card that fills the wait with a 60-second stretch, math sprint or breathing exercise, then pulls you back the moment the answer lands. Claude Code and Codex hooks start and dismiss it on their own, and it works across machines: Hermes runs on one box, the card pops up on the laptop over SSH. Free, MIT, local, no telemetry.',
+    stack: ['Rust', 'Tauri 2', 'Claude Code + Codex hooks', 'Windows · Linux · macOS beta'],
+    live: 'https://meanwhile.maxjustships.dev',
+    liveLabel: 'View live',
+    source: 'https://github.com/maxjustships/meanwhile',
+    image: '/assets/meanwhile.webp',
+    color: 'orange',
+  },
+  {
     title: 'RecPill',
     problem: 'Call recorders either work inside one app or send a bot into your meeting, so recording a Telegram or WhatsApp call is awkward.',
     solution:
